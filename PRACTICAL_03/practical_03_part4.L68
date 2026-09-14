@@ -1,0 +1,60 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 27/01/2026 10:38:22
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  practical_03_part4.x68
+00000000                             3  * Written by :  Callum Matthews C00306572
+00000000                             4  * Date       :  27/01/26
+00000000                             5  * Description:  using long, byte and word, change values declared below to update positions and score
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9  
+00001000                            10  * Put program code here
+00001000                            11  
+00001000  47F9 0000104A             12      LEA HEALTH, A3   ;load address of health
+00001006  49F9 0000104C             13      LEA BOSSHEALTH, A4
+0000100C  4BF9 00001050             14      LEA PLAYERXPOS, A5
+00001012  4DF9 00001051             15      LEA PLAYERYPOS, A6
+00001018  43F9 00001052             16      LEA BOSSXPOS, A1
+0000101E  45F9 00001054             17      LEA BOSSYPOS, A2
+00001024  41F9 00001056             18      LEA POINTS, A0
+0000102A                            19      
+0000102A  0413 000A                 20      SUB.B #10, (A3)     ; subtract 10 from player health
+0000102E  28B8 0064                 21      MOVE.L $64, (A4)    ; move 10 into boss health
+00001032  1ABC 001E                 22      MOVE.B #30, (A5)    ; move player x pos by 30 deci
+00001036  1CBC 0028                 23      MOVE.B #40, (A6)    ; move player y pos by 40 decimal
+0000103A  32BC 0032                 24      MOVE.W #50, (A1)    ; move boss x pos by 50 decinal
+0000103E  34BC 001E                 25      MOVE.W #30, (A2)    ; move boss y pos by 30 decimal
+00001042  10BC 0064                 26      MOVE.B #100, (A0)   ; move 100 points into score
+00001046                            27      
+00001046                            28      
+00001046                            29  
+00001046  FFFF FFFF                 30      SIMHALT             ; halt simulator
+0000104A                            31  
+0000104A                            32  * Put variables and constants here
+0000104A= 64                        33  HEALTH dc.b $64
+0000104C= 000003E8                  34  BOSSHEALTH dc.l $3E8
+00001050= 64                        35  PLAYERXPOS dc.b $64
+00001051= 64                        36  PLAYERYPOS dc.b $64
+00001052= 0020                      37  BOSSXPOS dc.w $20
+00001054= 0020                      38  BOSSYPOS dc.w $20
+00001056= 14                        39  POINTS dc.b $14
+00001057                            40      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BOSSHEALTH          104C
+BOSSXPOS            1052
+BOSSYPOS            1054
+HEALTH              104A
+PLAYERXPOS          1050
+PLAYERYPOS          1051
+POINTS              1056
+START               1000

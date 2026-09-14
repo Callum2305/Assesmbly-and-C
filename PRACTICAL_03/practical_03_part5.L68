@@ -1,0 +1,48 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 28/01/2026 13:55:19
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  practical_03_part5.x68
+00000000                             3  * Written by :  Callum Matthews C00306572
+00000000                             4  * Date       :  28/01/26
+00000000                             5  * Description:  addition. Will use an array defined below, achievement points, and traverse it to add each number into d0. 
+00000000                             6  *               d2 is temporary holding values here, gets over written each time.
+00000000                             7  *-----------------------------------------------------------
+00001000                             8      ORG    $1000
+00001000                             9  START:                  ; first instruction of program
+00001000                            10  
+00001000                            11      *START:
+00001000  227C 0000101C             12      MOVEA.L #ACHIEVEMENT_POINTS, A1     ;move address of achievemnt points into A!, our pointer
+00001006  7000                      13      MOVE.L #0, D0                       ; initialise D0 to value of 0
+00001008                            14      
+00001008  2419                      15      MOVE.L (A1)+, D2    ; move first number of array in A1, achievement points, into d2
+0000100A  D082                      16      ADD.L D2, D0        ; add value of d2 to d0, and update total in d0
+0000100C                            17      
+0000100C  2419                      18      MOVE.L (A1)+, D2    ; add next value of array in A1, achievment points, into d2, overwritting what was there previously
+0000100E  D082                      19      ADD.L D2, D0        ; add value of d2 into d0, update total
+00001010                            20      
+00001010  2419                      21      MOVE.L (A1)+, D2
+00001012  D082                      22      ADD.L D2, D0
+00001014                            23      
+00001014  2419                      24      MOVE.L (A1)+, D2
+00001016  D082                      25      ADD.L D2, D0
+00001018                            26      
+00001018  2419                      27      MOVE.L (A1)+, D2
+0000101A  D082                      28      ADD.L D2, D0
+0000101C                            29      
+0000101C= 00000005 0000000A ...     30      ACHIEVEMENT_POINTS: DC.L 5, 10, 15, 20, 30
+00001030                            31      ;here is where we specify the values of achievement points, these will add up tp 80 in total in d0 at the end.
+00001030                            32  
+Line 33 WARNING: Address expected
+00001030                            33      END    
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ACHIEVEMENT_POINTS  101C
+START               1000

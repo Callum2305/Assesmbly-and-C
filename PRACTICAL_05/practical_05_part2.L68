@@ -1,0 +1,55 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 10/02/2026 09:58:16
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  practical_05_part2.x68
+00000000                             3  * Written by :  Callum Matthews
+00000000                             4  * Date       :  10/02/26
+00000000                             5  * Description:  basic collions detection, count d2 up by 1 and once it equals d1, game over
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9  
+00001000                            10  * Put program code here
+00001000  43F9 00001026             11      LEA PLAYER_POSITION, A1 ; load effective address to a1,
+00001006  45F9 00001028             12      LEA ENEMY_POSITION, A2
+0000100C                            13      
+0000100C  1011                      14      MOVE.B (A1), D0     ; move a1 contents to D0, now player position
+0000100E  1212                      15      MOVE.B (A2), D1     ; move a2 contents to d1, now enemy position
+00001010                            16      
+00001010                            17  COLLISION_CHECK:
+00001010  B240                      18      CMP D0, D1        ; compare d0 to d1
+00001012  6D00 0006                 19      BLT NEXT_MOVE       ; if d0 is less than d1
+00001016  6700 0006                 20      BEQ COLLISION       ; when d1 is equal to d0, branch to collision
+0000101A                            21      
+0000101A                            22  NEXT_MOVE:
+0000101A  5200                      23      ADD.B #1, D0               ; increment d0 by 1, d0 basically slowly counts upward
+0000101C  60F2                      24      BRA COLLISION_CHECK         ; unconditional jump to collision check
+0000101E                            25      
+0000101E                            26  COLLISION:
+0000101E  6000 0002                 27      BRA GAME_OVER               ; when D2 is equal to D1, immediate game over as it counts as a collision
+00001022                            28      
+00001022                            29  GAME_OVER:
+00001022  FFFF FFFF                 30      SIMHALT             ; halt simulator
+00001026                            31  
+00001026                            32  * Put variables and constants here
+00001026= 0A 0F                     33  PLAYER_POSITION: DC.B 10, 15
+00001028= 32 37                     34  ENEMY_POSITION: DC.B 50, 55
+0000102A                            35  
+0000102A                            36      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+COLLISION           101E
+COLLISION_CHECK     1010
+ENEMY_POSITION      1028
+GAME_OVER           1022
+NEXT_MOVE           101A
+PLAYER_POSITION     1026
+START               1000

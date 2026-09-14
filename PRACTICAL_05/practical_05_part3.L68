@@ -1,0 +1,72 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 11/02/2026 13:23:32
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  pracitcal_05_part3,x68
+00000000                             3  * Written by :  Callum Matthews C00306572
+00000000                             4  * Date       :  10/02/26
+00000000                             5  * Description:  Just started, will finish later
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000  =00000064                  8  DAMAGE EQU 100
+00001000                             9  START:                  ; first instruction of program
+00001000                            10  
+00001000                            11  GAME_LOOP:
+00001000  43F9 00001055             12      LEA MSG_GAME_LOOP, A1
+00001006  103C 000D                 13      MOVE.B #13, D0
+0000100A  4E4F                      14      TRAP #15
+0000100C  0C39 0000 00001054        15      CMP.B #0, PLAYER_HEALTH
+00001014  6700 002C                 16      BEQ GAME_OVER
+00001018  6100 0008                 17      BSR UPDATE
+0000101C  6100 000C                 18      BSR COLLISION_CHECK
+00001020  60DE                      19      BRA GAME_LOOP
+00001022                            20      
+00001022                            21  UPDATE:
+00001022  5239 00001052             22      ADD.B #1, PLAYER_POSITION
+00001028  4E75                      23      RTS
+0000102A                            24      
+0000102A                            25  COLLISION_CHECK:
+0000102A  1239 00001052             26      MOVE.B PLAYER_POSITION, D1
+00001030  B202                      27      CMP.B D2, D1
+00001032  6700 0004                 28      BEQ COLLISION
+00001036  4E75                      29      RTS 
+00001038                            30      
+00001038                            31  COLLISION:
+00001038  0439 0064 00001054        32      SUB.B #DAMAGE, PLAYER_HEALTH
+00001040  60BE                      33      BRA GAME_LOOP
+00001042                            34  
+00001042                            35  GAME_OVER:
+00001042  43F9 00001068             36      LEA MSG_GAME_OVER, A1
+00001048  103C 000D                 37      MOVE.B #13, D0
+0000104C  4E4F                      38      TRAP #15
+0000104E  FFFF FFFF                 39      SIMHALT             ; halt simulator
+00001052                            40  
+00001052                            41  * Put variables and constants here
+00001052= 0A                        42  PLAYER_POSITION: DC.B 10
+00001053= 32                        43  ENEMY_POSITION: DC.B 50
+00001054= 64                        44  PLAYER_HEALTH: DC.B 100
+00001055                            45  
+00001055= 47 61 6D 65 20 6C ...     46  MSG_GAME_LOOP DC.B 'Game loop ........',0
+00001068= 47 61 6D 65 20 4F ...     47  MSG_GAME_OVER DC.B 'Game Over!',0
+00001073                            48      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+COLLISION           1038
+COLLISION_CHECK     102A
+DAMAGE              64
+ENEMY_POSITION      1053
+GAME_LOOP           1000
+GAME_OVER           1042
+MSG_GAME_LOOP       1055
+MSG_GAME_OVER       1068
+PLAYER_HEALTH       1054
+PLAYER_POSITION     1052
+START               1000
+UPDATE              1022

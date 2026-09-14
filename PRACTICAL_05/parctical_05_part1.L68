@@ -1,0 +1,47 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 10/02/2026 09:27:52
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  practical_05_part1.x68
+00000000                             3  * Written by :  Callum Matthews
+00000000                             4  * Date       :  10/02/26
+00000000                             5  * Description:  simple game design, showcase CMP and BEQ etc
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9  
+00001000                            10  INITIALISE:
+00001000  103C 0003                 11      MOVE.B #3, D0       ; initialise D0 to 3, health counter
+00001004  123C 0000                 12      MOVE.B #0, D1       ; Initialise D1 to 0, points counter
+00001008                            13      
+00001008                            14  GAME_LOOP:
+00001008  B03C 0001                 15      CMP.B #1, D0        ; compare d0 with 1, so check if equal 
+0000100C  6600 0006                 16      BNE GAME_POINTS     ; Branch if not equal, so if d0 is not equal to one, jump here
+00001010  6700 000A                 17      BEQ GAME_OVER       ; bracnch if equal, so if d0 equal 0, jump here as game over
+00001014                            18      
+00001014                            19  GAME_POINTS
+00001014  0601 000A                 20      ADD.B #10, D1       ; add 10 hex in bytes to d1
+00001018  5300                      21      SUB.B #1, D0        ; subtract 1 hex in byte from d0
+0000101A  60EC                      22      BRA GAME_LOOP       ; unconditional jump to game_loop
+0000101C                            23      
+0000101C                            24  GAME_OVER:
+0000101C                            25                          ; game over, nothing here so end
+0000101C  FFFF FFFF                 26      SIMHALT             ; halt simulator
+00001020                            27  
+00001020                            28  * Put variables and constants here
+00001020                            29  
+00001020                            30      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+GAME_LOOP           1008
+GAME_OVER           101C
+GAME_POINTS         1014
+INITIALISE          1000
+START               1000

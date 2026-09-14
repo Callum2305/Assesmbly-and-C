@@ -1,0 +1,59 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 21/01/2026 13:27:32
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : practical_02_part4.x68
+00000000                             3  * Written by : Callum Matthews C00306572
+00000000                             4  * Date       : 20/01/26
+00000000                             5  * Description: Same as part 3, but more examples to see changes in memory addresses as we append. So move longs, words and bytes into same address without first clearing address
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9  
+00001000                            10  * Put program code here
+00001000  7004                      11      MOVE.L #%100, D0    ; move binary 100 (4 in hex and dec) into d0
+00001002  223C 00000100             12      MOVE.L #$100, D1    ; move hex 100 (256 in dec) into d1
+00001008  7464                      13      MOVE.L #100, D2     ; move decimal 100 (64 in hex) into d2
+0000100A  760F                      14      MOVE.L #%1111, D3   ; move binary 1111 into d3 (F in hexi)
+0000100C  7832                      15      MOVE.L #50, D4      ; move decimal 50 (32 in hexi) into D4
+0000100E                            16      
+0000100E  21C0 3000                 17      MOVE.L D0, $3000    ; move value in d0 into memory address 3000 and so on
+00001012  21C1 3010                 18      MOVE.L D1, $3010
+00001016  21C2 3020                 19      MOVE.L D2, $3020
+0000101A  21C3 3030                 20      MOVE.L D3, $3030    ;move contents of d3 into address 3030 
+0000101E  21C4 3040                 21      MOVE.L D4, $3040    ; move contents of d4 into address 3040
+00001022                            22      
+00001022  31FC 0032 3040            23      MOVE.W #50, $3040   ; move a word of 50 decimal (32 hex) into address 3040
+00001028  31FC 000F 3030            24      MOVE.W #%1111, $3030 ;move a word of 1111 binary into memory address 3030
+0000102E  31FC 0064 3020            25      MOVE.W #100, $3020   ; move a word of 100 (64 hex) decimal into address 3020
+00001034  31FC 0100 3010            26      MOVE.W #$100, $3010 ; move  word of 100 hex (256 dec) into address 3010
+0000103A  31FC 0004 3000            27      MOVE.W #%100, $3000 ; move a word of 100 binary (4 in hex and dec)
+00001040                            28      
+00001040  11FC 0032 3040            29      MOVE.B #50, $3040       ; move a byte of 50 decimal (32 hex) into address 3040
+00001046  11FC 000F 3030            30      MOVE.B #%1111, $3030    ; move a byte of 1111 binary (f in hex) into memory address 3030
+0000104C  11FC 0064 3020            31      MOVE.B #100, $3020      ; move byte of 100 decimal (64 hex)into 3020
+00001052  11FC 0064 3010            32      MOVE.B #$64, $3010      ;move byte of 64 hex into 3010
+00001058  11FC 008F 3000            33      MOVE.B #%10001111, $3000    ; move byte of Binary 10001111 (8f) into address 3000
+0000105E                            34      
+0000105E  21FC 000001F4 3040        35      MOVE.L #500, $3040       ; move long 500 decimal (1F4 in hexi) into 3040
+00001066  21FC 0000000B 3030        36      MOVE.L #%1011, $3030    ; move long 1011 binary (B in hexi) into address 3030
+0000106E  21FC 0000006E 3020        37      MOVE.L #110, $3020      ; move long 110 decimal (6E in hexi) into address 3020
+00001076  21FC 00000032 3010        38      MOVE.L #$32, $3010      ; move long 32 hexi into address 3010
+0000107E  21FC 000000AF 3000        39      MOVE.L #%10101111, $3000    ; mmove long 10101111 (AF in hexi) binary into address 3000
+00001086                            40      
+00001086                            41  
+00001086  FFFF FFFF                 42      SIMHALT             ; halt simulator
+0000108A                            43  
+0000108A                            44  * Put variables and constants here
+0000108A                            45  
+0000108A                            46      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000

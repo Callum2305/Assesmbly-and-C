@@ -1,0 +1,46 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 24/02/2026 09:57:37
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : practical_06_part4.x68
+00000000                             3  * Written by : Callum Matthews C00306572
+00000000                             4  * Date       : 24/02/26
+00000000                             5  * Description: What is the purpose of stack pointer?
+00000000                             6  *              It is used to indicate the location of the last
+00000000                             7  *              item put into the stack. Seen in A7
+00000000                             8  *              First value in will be the last value out as
+00000000                             9  *              stack moves downwards.
+00000000                            10  *-----------------------------------------------------------
+00001000                            11      ORG    $1000
+00001000                            12  START:                  ; first instruction of program
+00001000  4FF8 4000                 13      LEA $4000, SP
+00001004                            14      
+00001004  1F3C 0001                 15      MOVE.B #1, -(SP)    ; Goes into address register A7
+00001008  1F3C 0002                 16      MOVE.B #2, -(SP)    ; decrements SP by 1 each time
+0000100C  1F3C 0003                 17      MOVE.B #3, -(SP)
+00001010  1F3C 0004                 18      MOVE.B #4, -(SP)
+00001014                            19  
+00001014  121F                      20      MOVE.B (SP)+, D1    ; increment D1 values from SP
+00001016  121F                      21      MOVE.B (SP)+, D1
+00001018  121F                      22      MOVE.B (SP)+, D1
+0000101A  121F                      23      MOVE.B (SP)+, D1
+0000101C                            24      
+0000101C                            25  END:
+0000101C                            26  * Put program code here
+0000101C                            27  
+0000101C  FFFF FFFF                 28      SIMHALT             ; halt simulator
+00001020                            29  
+00001020                            30  * Put variables and constants here
+00001020                            31  
+00001020                            32      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+END                 101C
+START               1000

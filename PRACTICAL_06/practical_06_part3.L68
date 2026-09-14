@@ -1,0 +1,45 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 24/02/2026 09:47:47
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : practical_06_part3.x68
+00000000                             3  * Written by : Callum Matthews C00306572
+00000000                             4  * Date       : 24/02/26
+00000000                             5  * Description: Purpose of address register 7: STACKPOINTER ADDRESS
+00000000                             6  *   demonstrate how first number in will be last number out, using stack decrementation
+00000000                             7  *-----------------------------------------------------------
+00001000                             8      ORG    $1000
+00001000                             9  START:                  ; first instruction of program
+00001000  4FF8 4000                 10      LEA $4000, A7
+00001004                            11      
+00001004  1F3C 0001                 12      MOVE.B #1, -(A7)    ;decrease a7, then store new value at that adddress
+00001008  1F3C 0002                 13      MOVE.B #2, -(A7)
+0000100C  1F3C 0003                 14      MOVE.B #3, -(A7)
+00001010  1F3C 0004                 15      MOVE.B #4, -(A7)
+00001014                            16      
+00001014  121F                      17      MOVE.B (A7)+, D1    ; read value at address a7, then increment and store in d1
+00001016  121F                      18      MOVE.B (A7)+, D1
+00001018  121F                      19      MOVE.B (A7)+, D1    ; every MOVE.B ovrwrites d1
+0000101A  121F                      20      MOVE.B (A7)+, D1
+0000101C                            21      
+0000101C                            22      ; order in: 4,3,2,1 order out 1,2,3,4
+0000101C                            23      ; last one in will be first out
+0000101C                            24  END:
+0000101C                            25  * Put program code here
+0000101C                            26  
+0000101C  FFFF FFFF                 27      SIMHALT             ; halt simulator
+00001020                            28  
+00001020                            29  * Put variables and constants here
+00001020                            30  
+00001020                            31      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+END                 101C
+START               1000

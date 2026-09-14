@@ -1,0 +1,38 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 24/02/2026 09:42:59
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  practical_06_part1.x68
+00000000                             3  * Written by :  Callum Matthews C00306572
+00000000                             4  * Date       :  24/02/26
+00000000                             5  * Description:  Load a message into memory using trap / system call. Message viewable in memory tab, not terminal.
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9      ;Move trap task to d0
+00001000  103C 0002                 10      MOVE.B #2, D0
+00001004                            11      ;Interrupt and Trap Task
+00001004  4E4F                      12      TRAP #15
+00001006                            13      
+00001006  43F9 00001012             14      LEA MESSAGE, A1
+0000100C  103C 000D                 15      MOVE.B #13, D0
+00001010  4E4F                      16      TRAP #15
+00001012                            17      
+00001012                            18  END_PROG:
+00001012                            19  
+00001012= 54 72 61 70 20 74 ...     20  MESSAGE: DC.B 'Trap task Test', 0
+00001021                            21  
+00001021                            22  
+Line 23 WARNING: END directive missing, starting address not set
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+END_PROG            1012
+MESSAGE             1012
+START               1000

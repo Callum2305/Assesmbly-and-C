@@ -1,0 +1,58 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 24/02/2026 10:28:30
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : practical_06_part5.x68
+00000000                             3  * Written by : Callum Matthews C00306572
+00000000                             4  * Date       : 24/02/26
+00000000                             5  * Description: What observations can be made viewing the stack?
+00000000                             6  *              You can see each value inputted into the stack via A1, A2 and SS
+00000000                             7  *              Stack enables subroutine calls and returns
+00000000                             8  *-----------------------------------------------------------
+00000000                             9  
+00000000                            10  START:                  ; first instruction of program
+00000000  2F3C 00000038             11      MOVE.L #HEALTH, -(SP)
+00000006  4EB9 00000014             12      JSR GAME_LOOP       ; jump to subroutine, pushes return address onto stack and jumps to subroutine label
+0000000C  6100 0010                 13      BSR HEADS_UP_DISPLAY
+00000010  6000 0026                 14      BRA END
+00000014                            15      
+00000014                            16  GAME_LOOP:
+00000014  226F 0004                 17      MOVEA.L 4(SP), A1
+00000018  0411 000A                 18      SUB.B #10, (A1) ; subtract 10 from health, leaving 90
+0000001C  4E75                      19      RTS
+0000001E                            20      
+0000001E                            21  HEADS_UP_DISPLAY:
+0000001E  43F9 00000039             22      LEA MESSAGE, A1
+00000024  103C 000E                 23      MOVE.B #14, D0
+00000028  4E4F                      24      TRAP #15
+0000002A  1239 00000038             25      MOVE.B HEALTH, D1
+00000030  103C 0003                 26      MOVE.B #3, D0
+00000034  4E4F                      27      TRAP #15
+00000036  4E75                      28      RTS
+00000038                            29      
+00000038                            30  END:
+00000038                            31      
+00000038= 64                        32  HEALTH: DC.B 100
+00000039= 48 45 41 4C 54 48 ...     33  MESSAGE: DC.B 'HEALTH:', 0 
+00000041                            34  * Put program code here
+00000041                            35  
+00000042  FFFF FFFF                 36      SIMHALT             ; halt simulator
+00000046                            37  
+00000046                            38  * Put variables and constants here
+00000046                            39  
+00000046                            40      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+END                 38
+GAME_LOOP           14
+HEADS_UP_DISPLAY    1E
+HEALTH              38
+MESSAGE             39
+START               0

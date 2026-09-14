@@ -1,0 +1,258 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 25/02/2026 13:25:25
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : TRAP #15 Task Library (EASy68K)
+00000000                             3  * Written by : Callum Matthews C00306572
+00000000                             4  * Date       :
+00000000                             5  * Description: Demonstrate different Trap Tasks
+00000000                             6  *              Note, i did this part last, i had completed part 1 and parts 3-6 before doing part 2
+00000000                             7  *              I do not have all trap codes done as i couldnt understand them all
+00000000                             8  *              using LEA to load address of messages, then TRAP #, along with MOVE
+00000000                             9  *-----------------------------------------------------------
+00000000                            10   
+00001000                            11          ORG     $1000
+00001000                            12  
+00001000                            13  START:
+00001000                            14  
+00001000                            15  
+00001000                            16          ; 11 Clear screen
+00001000                            17  
+00001000  323C FF00                 18          MOVE.W  #$FF00,D1
+00001004  103C 000B                 19          MOVE.B  #11,D0          ; here we use code 11 to clear screen
+00001008  4E4F                      20          TRAP    #15
+0000100A                            21  
+0000100A                            22  
+0000100A                            23          ; 13 Print NULL terminated string WITH CR/LF
+0000100A                            24  
+0000100A  43F9 0000116C             25          LEA     Msg13,A1
+00001010  103C 000D                 26          MOVE.B  #13,D0
+00001014  4E4F                      27          TRAP    #15
+00001016                            28  
+00001016                            29  
+00001016                            30          ; 14 Print NULL terminated string NO CR/LF
+00001016                            31  
+00001016  43F9 0000118C             32          LEA     Msg14,A1
+0000101C  103C 000E                 33          MOVE.B  #14,D0
+00001020  4E4F                      34          TRAP    #15
+00001022                            35  
+00001022  43F9 000012E6             36          LEA     CRLF,A1
+00001028  103C 000E                 37          MOVE.B  #14,D0
+0000102C  4E4F                      38          TRAP    #15
+0000102E                            39          
+0000102E                            40          ; 0 Print length-limited string WITH CR/LF
+0000102E                            41          ;    A1 string, D1.W = length
+0000102E                            42  
+0000102E  43F9 000011AA             43          LEA     LenStr,A1
+00001034  323C 000C                 44          MOVE.W  #12,D1                 ; print first 12 bytes ("Length print")
+00001038  103C 0000                 45          MOVE.B  #0,D0
+0000103C  4E4F                      46          TRAP    #15
+0000103E                            47  
+0000103E                            48  
+0000103E                            49          ; 1 Print length-limited string NO CR/LF
+0000103E                            50  
+0000103E  43F9 000011AA             51          LEA     LenStr,A1
+00001044  323C 000C                 52          MOVE.W  #12,D1
+00001048  103C 0001                 53          MOVE.B  #1,D0
+0000104C  4E4F                      54          TRAP    #15
+0000104E                            55  
+0000104E  43F9 000012E6             56          LEA     CRLF,A1
+00001054  103C 000E                 57          MOVE.B  #14,D0
+00001058  4E4F                      58          TRAP    #15
+0000105A                            59  
+0000105A                            60  
+0000105A                            61          ; 5 Read single char into D1.B
+0000105A                            62    
+0000105A  43F9 000011BF             63          LEA     Msg5,A1
+00001060  103C 000E                 64          MOVE.B  #14,D0
+00001064  4E4F                      65          TRAP    #15
+00001066                            66  
+00001066  103C 0005                 67          MOVE.B  #5,D0
+0000106A  4E4F                      68          TRAP    #15                     ; D1.B now has char
+0000106C                            69  
+0000106C                            70  
+0000106C                            71          ; 6 display single char in D1.B (echo it back)
+0000106C                            72  
+0000106C  43F9 000011D7             73          LEA     Msg6,A1
+00001072  103C 000E                 74          MOVE.B  #14,D0
+00001076  4E4F                      75          TRAP    #15
+00001078                            76  
+00001078  103C 0006                 77          MOVE.B  #6,D0
+0000107C  4E4F                      78          TRAP    #15
+0000107E                            79  
+0000107E  43F9 000012E6             80          LEA     CRLF,A1
+00001084  103C 000E                 81          MOVE.B  #14,D0
+00001088  4E4F                      82          TRAP    #15
+0000108A                            83  
+0000108A                            84  
+0000108A                            85  
+0000108A                            86          ; 8 Time in hundredths since midnight -> D1.L
+0000108A                            87  
+0000108A  43F9 000011ED             88          LEA     Msg8,A1
+00001090  103C 000E                 89          MOVE.B  #14,D0
+00001094  4E4F                      90          TRAP    #15
+00001096                            91  
+00001096  103C 0008                 92          MOVE.B  #8,D0
+0000109A  4E4F                      93          TRAP    #15                     ; D1.L = time
+0000109C                            94  
+0000109C  103C 0003                 95          MOVE.B  #3,D0                   ; print number smallest field
+000010A0  4E4F                      96          TRAP    #15
+000010A2                            97  
+000010A2  43F9 000012E6             98          LEA     CRLF,A1
+000010A8  103C 000E                 99          MOVE.B  #14,D0
+000010AC  4E4F                     100          TRAP    #15
+000010AE                           101  
+000010AE                           102  
+000010AE                           103          ;4 Read number into D1.L
+000010AE                           104  
+000010AE  43F9 00001219            105          LEA     Msg4,A1
+000010B4  103C 000E                106          MOVE.B  #14,D0
+000010B8  4E4F                     107          TRAP    #15
+000010BA                           108  
+000010BA  103C 0004                109          MOVE.B  #4,D0
+000010BE  4E4F                     110          TRAP    #15                     ; D1.L = number
+000010C0                           111  
+000010C0                           112  
+000010C0                           113          ;3 Print signed number (smallest field)
+000010C0                           114  
+000010C0  43F9 00001232            115          LEA     Msg3,A1
+000010C6  103C 000E                116          MOVE.B  #14,D0
+000010CA  4E4F                     117          TRAP    #15
+000010CC                           118  
+000010CC  103C 0003                119          MOVE.B  #3,D0
+000010D0  4E4F                     120          TRAP    #15
+000010D2                           121  
+000010D2  43F9 000012E6            122          LEA     CRLF,A1
+000010D8  103C 000E                123          MOVE.B  #14,D0
+000010DC  4E4F                     124          TRAP    #15
+000010DE                           125  
+000010DE                           126  
+000010DE                           127  
+000010DE                           128          ;17 Combo: print string (A1) then print D1.L
+000010DE                           129  
+000010DE  43F9 0000124C            130          LEA     Msg17,A1
+000010E4  103C 0011                131          MOVE.B  #17,D0
+000010E8  4E4F                     132          TRAP    #15
+000010EA                           133  
+000010EA  43F9 000012E6            134          LEA     CRLF,A1
+000010F0  103C 000E                135          MOVE.B  #14,D0
+000010F4  4E4F                     136          TRAP    #15
+000010F6                           137  
+000010F6                           138  
+000010F6                           139          ;18 Combo: print string (A1) then read number into D1.L
+000010F6                           140  
+000010F6  43F9 00001265            141          LEA     Msg18,A1
+000010FC  103C 0012                142          MOVE.B  #18,D0
+00001100  4E4F                     143          TRAP    #15
+00001102                           144  
+00001102  43F9 00001285            145          LEA     Msg18Echo,A1
+00001108  103C 0011                146          MOVE.B  #17,D0                  ; print label then number (D1.L)
+0000110C  4E4F                     147          TRAP    #15
+0000110E                           148  
+0000110E  43F9 000012E6            149          LEA     CRLF,A1
+00001114  103C 000E                150          MOVE.B  #14,D0
+00001118  4E4F                     151          TRAP    #15
+0000111A                           152  
+0000111A                           153          ;11 Cursor positioning (row/col)
+0000111A                           154          ;D1.W high byte = COL, low byte = ROW
+0000111A                           155  
+0000111A  323C 0502                156          MOVE.W  #$0502,D1               ; COL=5, ROW=2
+0000111E  103C 000B                157          MOVE.B  #11,D0
+00001122  4E4F                     158          TRAP    #15
+00001124                           159  
+00001124  43F9 00001294            160          LEA     MsgCursor,A1
+0000112A  103C 000D                161          MOVE.B  #13,D0
+0000112E  4E4F                     162          TRAP    #15
+00001130                           163  
+00001130                           164  
+00001130                           165  
+00001130                           166  
+00001130                           167          ;19 Key state / scan code
+00001130                           168  
+00001130  43F9 000012BB            169          LEA     Msg19,A1
+00001136  103C 000D                170          MOVE.B  #13,D0
+0000113A  4E4F                     171          TRAP    #15
+0000113C                           172  
+0000113C  4281                     173          CLR.L   D1
+0000113E  103C 0013                174          MOVE.B  #19,D0
+00001142  4E4F                     175          TRAP    #15                     ; D1.B = last key pressed code
+00001144                           176  
+00001144  43F9 000012D5            177          LEA     Msg19Echo,A1
+0000114A  103C 000E                178          MOVE.B  #14,D0
+0000114E  4E4F                     179          TRAP    #15
+00001150                           180  
+00001150  103C 0006                181          MOVE.B  #6,D0
+00001154  4E4F                     182          TRAP    #15                     ; display it (may be non-printable for special keys)
+00001156                           183  
+00001156  43F9 000012E6            184          LEA     CRLF,A1
+0000115C  103C 000E                185          MOVE.B  #14,D0
+00001160  4E4F                     186          TRAP    #15
+00001162                           187  
+00001162                           188  
+00001162                           189          ;9 Exit
+00001162                           190  
+00001162  103C 0009                191          MOVE.B  #9,D0
+00001166  4E4F                     192          TRAP    #15
+00001168                           193  
+00001168  FFFF FFFF                194          SIMHALT
+0000116C                           195  
+0000116C                           196  
+0000116C                           197      ; Messages
+0000116C                           198  
+0000116C= 54 61 73 6B 20 31 ...    199  Msg13       DC.B    'Task 13: NULL string with CR/LF',0
+0000118C                           200  
+0000118C= 54 61 73 6B 20 31 ...    201  Msg14       DC.B    'Task 14: NULL string no CR/LF',0
+000011AA                           202  
+000011AA= 4C 65 6E 67 74 68 ...    203  LenStr      DC.B    'Length print DEMO...',0
+000011BF                           204  
+000011BF= 54 61 73 6B 20 35 ...    205  Msg5        DC.B    'Task 5: press ONE key: ',0
+000011D7                           206  
+000011D7= 54 61 73 6B 20 36 ...    207  Msg6        DC.B    'Task 6: you pressed: ',0
+000011ED                           208  
+000011ED= 54 61 73 6B 20 38 ...    209  Msg8        DC.B    'Task 8: time (hundredths since midnight) = ',0
+00001219                           210  
+00001219= 54 61 73 6B 20 34 ...    211  Msg4        DC.B    'Task 4: enter a number: ',0
+00001232                           212  
+00001232= 54 61 73 6B 20 33 ...    213  Msg3        DC.B    'Task 3: number printed = ',0
+0000124C                           214  
+0000124C= 54 61 73 6B 20 31 ...    215  Msg17       DC.B    'Task 17: number again = ',0
+00001265                           216  
+00001265= 54 61 73 6B 20 31 ...    217  Msg18       DC.B    'Task 18: enter another number: ',0
+00001285= 59 6F 75 20 65 6E ...    218  Msg18Echo   DC.B    'You entered = ',0
+00001294                           219  
+00001294                           220  
+00001294= 54 61 73 6B 20 31 ...    221  MsgCursor   DC.B    'Task 11: cursor moved here (row2,col5)',0
+000012BB                           222  
+000012BB                           223  
+000012BB= 54 61 73 6B 20 31 ...    224  Msg19       DC.B    'Task 19: last key code = ',0
+000012D5= 4B 65 79 20 63 6F ...    225  Msg19Echo   DC.B    'Key code char = ',0
+000012E6                           226  
+000012E6= 0D 0A 00                 227  CRLF:   DC.B    $0D,$0A,0 ; carrage return and line feed
+000012E9                           228  
+000012E9                           229  
+000012E9                           230          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CRLF                12E6
+LENSTR              11AA
+MSG13               116C
+MSG14               118C
+MSG17               124C
+MSG18               1265
+MSG18ECHO           1285
+MSG19               12BB
+MSG19ECHO           12D5
+MSG3                1232
+MSG4                1219
+MSG5                11BF
+MSG6                11D7
+MSG8                11ED
+MSGCURSOR           1294
+START               1000

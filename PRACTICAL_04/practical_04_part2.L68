@@ -1,0 +1,67 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 03/02/2026 09:57:24
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  practical_04_part2.x68
+00000000                             3  * Written by :  Callum Matthews C00306572
+00000000                             4  * Date       :  03/02/26
+00000000                             5  * Description:  Demonstrate AND OR EOR operations
+00000000                             6  *               In AND, resulting bit is 1 only if both source and destination bits are 1. So 1 and 1 gives 1, 1 and 0 gives 0
+00000000                             7  *               In OR, resulting bit is 1 if either source or destination bit is 1. So 1 and 0 gives 1, 1 and 1 gives 1, 0 and 0 gives 0
+00000000                             8  *               In EOR, resulting bit is 1 only if source or destination have different bit, so 0 and 1 will give 1, 1 and 1 will give 0. 0 and 0 will give 0
+00000000                             9  *-----------------------------------------------------------
+00001000                            10      ORG    $1000
+00001000                            11  START:                  ; first instruction of program
+00001000                            12  
+00001000                            13      ; Move Health to Memory location $3000
+00001000  11FC 0064 3000            14      MOVE.B #100, $3000
+00001006                            15      
+00001006                            16      ; Move location of player into Data Register
+00001006                            17      ; X first Byte 0 to 15
+00001006                            18      ; Y second byte 0 to 15
+00001006  143C 0012                 19      MOVE.B #$12, D2
+0000100A                            20      
+0000100A                            21      ; Move locaion of NPC into data register
+0000100A                            22      ; X first byte 0 to 15
+0000100A                            23      ; Y second byte 0 to 15
+0000100A  163C 0022                 24      MOVE.B #$22, D3
+0000100E                            25      
+0000100E                            26      ; Bitwise AND D2 and D3
+0000100E                            27      ; AND gives 1 if source and destination bit is 1. In this case D3 becomes $02
+0000100E  C602                      28      AND.B D2, D3
+00001010                            29      
+00001010                            30      ; Bitwise OR D2 with D3
+00001010  8602                      31      OR.B D2, D3
+00001012                            32      
+00001012                            33      ; D3 will become $32 as OR gives a bit of 1 if either source or desitination bit is 1
+00001012                            34      ; Now d3 becomes $12 after OR operation
+00001012                            35      
+00001012                            36      ; Bitwise EOR Exclusive OR operation
+00001012  B503                      37      EOR.B D2, D3
+00001014                            38      ; if either 1 bit is 1, output is 1, however if both bits are 1, output is 0
+00001014                            39      ; Now D3 will be 0 as both values D2 and D3 have the same bits set as 1, so now output is 0
+00001014                            40      
+00001014                            41      ; Load memory address $3000 into Address Register A1
+00001014  43F8 3000                 42      LEA $3000, A1
+00001018                            43      
+00001018                            44      ; Hit by NPC 
+00001018  0411 0014                 45      SUB.B #20, (A1)
+0000101C                            46      
+0000101C                            47      ; Pickup health found
+0000101C  0611 000A                 48      ADD.B #10, (A1)
+00001020                            49  
+00001020  FFFF FFFF                 50      SIMHALT             ; halt simulator
+00001024                            51  
+00001024                            52  * Put variables and constants here
+00001024                            53  
+00001024                            54      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000

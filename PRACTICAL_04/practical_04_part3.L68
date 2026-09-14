@@ -1,0 +1,62 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 03/02/2026 10:32:18
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  practical_04_part3.x68
+00000000                             3  * Written by :  Callum Matthews C00306572
+00000000                             4  * Date       :  03/02/26
+00000000                             5  * Description:  Here we use subroutines. Along with RTS and BRA.
+00000000                             6  *               RTS: Will take you back to the to where you first called a subroutine
+00000000                             7  *               BRA: means to jump to a new location in the code, esentially Go To line that begins with what was specified after BRA
+00000000                             8  *               BSR: means to jump to a subroutine
+00000000                             9  *-----------------------------------------------------------
+00001000                            10      ORG    $1000
+00001000                            11  START:                  ; first instruction of program
+00001000                            12  
+00001000                            13      ; move health to memory location $3000
+00001000  11FC 0064 3000            14      MOVE.B #100, $3000
+00001006                            15      
+00001006                            16      ; load memory address $3000 into A1
+00001006  43F8 3000                 17      LEA $3000, A1
+0000100A                            18      
+0000100A                            19      ; Branch to Taking Damage
+0000100A  6100 000A                 20      BSR TAKING_DAMAGE
+0000100E                            21      
+0000100E                            22  BACK_IN_THE_GAME:
+0000100E                            23      ; Lets Help this player out
+0000100E  6100 000C                 24      BSR HEALTH_PICKUP
+00001012  6000 000E                 25      BRA GAME_END
+00001016                            26      
+00001016                            27  TAKING_DAMAGE:
+00001016                            28      ; Hit by NPC
+00001016  0411 0014                 29      SUB.B #20, (A1)
+0000101A  60F2                      30      BRA BACK_IN_THE_GAME
+0000101C                            31      
+0000101C                            32  HEALTH_PICKUP:
+0000101C                            33      ; Pickup health found
+0000101C  0611 000A                 34      ADD.B #10, (A1)
+00001020  4E75                      35      RTS
+00001022                            36      
+00001022                            37  GAME_END:
+00001022                            38      ; Game Over
+00001022  12BC 0000                 39      MOVE.B #$00, (A1)
+00001026                            40      
+00001026  FFFF FFFF                 41      SIMHALT             ; halt simulator
+0000102A                            42  
+0000102A                            43  * Put variables and constants here
+0000102A                            44  
+0000102A                            45      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BACK_IN_THE_GAME    100E
+GAME_END            1022
+HEALTH_PICKUP       101C
+START               1000
+TAKING_DAMAGE       1016

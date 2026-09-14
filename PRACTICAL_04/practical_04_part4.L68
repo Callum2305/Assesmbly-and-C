@@ -1,0 +1,81 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 04/02/2026 13:59:06
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :  practical_04_part4.x68
+00000000                             3  * Written by :  Callum Matthews C00306572
+00000000                             4  * Date       :  03/02/26
+00000000                             5  * Description:  Simple game simulation using subroutines,
+00000000                             6  *               registers, arithmetic, logical operations
+00000000                             7  *               and branching. I do not really know how games work admittidly.
+00000000                             8  *-----------------------------------------------------------
+00000000                             9  
+00000000                            10  
+00001000                            11      ORG    $1000
+00001000                            12  START:                  ; first instruction of program
+00001000                            13  
+00001000                            14  * Put program code here
+00001000                            15  
+00001000  47F9 00001062             16      LEA HEALTH, A3   ;load address of health
+00001006  49F9 00001064             17      LEA BOSSHEALTH, A4
+0000100C  4BF9 00001068             18      LEA PLAYERXPOS, A5
+00001012  4DF9 00001069             19      LEA PLAYERYPOS, A6
+00001018  43F9 0000106A             20      LEA BOSSXPOS, A1
+0000101E  45F9 0000106C             21      LEA BOSSYPOS, A2
+00001024  41F9 0000106E             22      LEA POINTS, A0
+0000102A                            23     
+0000102A  6100 0012                 24      BSR TAKING_DAMAGE   ; branch to taking damage
+0000102E                            25      
+0000102E                            26  BACK_IN_THE_GAME:
+0000102E  0414 000A                 27      SUB.B #10, (A4) ; Take 10 hp from boss
+00001032  6100 0018                 28      BSR HEALTH_PICKUP       ; branch to health pickup
+00001036  10BC 0064                 29      MOVE.B #100, (A0)   ; move 100 points into score
+0000103A  6000 001E                 30      BRA GAME_END        ; brnach to game end
+0000103E                            31     
+0000103E                            32  TAKING_DAMAGE:
+0000103E  32BC 0032                 33      MOVE.W #50, (A1)    ; move boss x pos by 50 decinal
+00001042  34BC 001E                 34      MOVE.W #30, (A2)    ; move boss y pos by 30 decimal
+00001046  0411 0014                 35      SUB.B #20, (A1)      ; Hit by NPC
+0000104A  60E2                      36      BRA BACK_IN_THE_GAME    ; branch to back in the game
+0000104C                            37      
+0000104C                            38  HEALTH_PICKUP:
+0000104C  0613 000A                 39      ADD.B #10, (A3)     ; Pickup health found
+00001050  1ABC 001E                 40      MOVE.B #30, (A5)    ; move player x pos by 30 deci
+00001054  1CBC 0028                 41      MOVE.B #40, (A6)    ; move player y pos by 40 decimal
+00001058  4E75                      42      RTS   
+0000105A                            43      
+0000105A                            44  GAME_END:
+0000105A                            45      ; Game Over
+0000105A  16BC 0000                 46      MOVE.B #$00, (A3)
+0000105E  FFFF FFFF                 47      SIMHALT             ; halt simulator
+00001062                            48  
+00001062                            49  * Put variables and constants here
+00001062= 64                        50  HEALTH dc.b $64
+00001064= 000003E8                  51  BOSSHEALTH dc.l $3E8
+00001068= 64                        52  PLAYERXPOS dc.b $64
+00001069= 64                        53  PLAYERYPOS dc.b $64
+0000106A= 0020                      54  BOSSXPOS dc.w $20
+0000106C= 0020                      55  BOSSYPOS dc.w $20
+0000106E= 14                        56  POINTS dc.b $14
+0000106F                            57      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BACK_IN_THE_GAME    102E
+BOSSHEALTH          1064
+BOSSXPOS            106A
+BOSSYPOS            106C
+GAME_END            105A
+HEALTH              1062
+HEALTH_PICKUP       104C
+PLAYERXPOS          1068
+PLAYERYPOS          1069
+POINTS              106E
+START               1000
+TAKING_DAMAGE       103E
